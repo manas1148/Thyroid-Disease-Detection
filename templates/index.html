@@ -1,0 +1,403 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thyroid Disease Detection</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+            background: url('https://source.unsplash.com/featured/?health') no-repeat center center fixed;
+            background-size: cover;
+        }
+
+        header,
+        footer {
+            width: 100%;
+            background: rgba(4, 17, 32, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        header h1,
+        footer p {
+            margin: 0;
+            font-size: 24px;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .wrapper {
+            width: 100%;
+            max-width: 800px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 12px;
+            padding: 30px 40px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin: 40px 0;
+            opacity: 0;
+            transform: translateY(50px);
+            animation: fadeInUp 1s forwards;
+        }
+
+        .wrapper h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #333;
+            text-align: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .input-box {
+            position: relative;
+            width: 100%;
+            margin-bottom: 15px;
+        }
+
+        .input-box label {
+            display: block;
+            margin: 5px 0;
+            color: #333;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .input-box input, .input-box select {
+            width: 100%;
+            padding: 8px;
+            box-sizing: border-box;
+            background: transparent;
+            border: 2px solid rgba(0, 0, 0, .2);
+            border-radius: 40px;
+            font-size: 14px;
+            color: #333;
+            background: #f9f9f9;
+        }
+
+        .input-box input::placeholder {
+            color: #aaa;
+        }
+
+        .wrapper .btn {
+            width: 100%;
+            height: 50px;
+            background: rgba(4, 17, 32, 0.8);
+            border: none;
+            outline: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #fff;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: background 0.3s;
+            margin-top: 20px;
+        }
+
+        .wrapper .btn:hover {
+            background: #0056b3;
+        }
+
+        footer .social-links {
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        footer .social-links a {
+            color: #fff;
+            font-size: 24px;
+            transition: color 0.3s;
+        }
+
+        footer .social-links a:hover {
+            color: #333;
+        }
+
+        @media (max-width: 600px) {
+            .wrapper {
+                padding: 20px;
+            }
+
+            header h1,
+            footer p {
+                font-size: 20px;
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .reference-range {
+            font-size: 12px;
+            color: #666;
+            margin-top: 4px;
+            font-style: italic;
+        }
+        
+        .input-description {
+            font-size: 12px;
+            color: #555;
+            margin-top: 2px;
+            margin-bottom: 4px;
+        }
+
+        .prediction {
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 10px;
+            background: rgba(255, 255, 255, 0.9);
+        }
+
+        .prediction.positive {
+            color: #d32f2f;
+            background: rgba(211, 47, 47, 0.1);
+        }
+
+        .prediction.negative {
+            color: #388e3c;
+            background: rgba(56, 142, 60, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Thyroid Disease Detection</h1>
+    </header>
+
+    <div class="container">
+        <div class="wrapper">
+            {% if prediction_text %}
+            <div class="prediction {% if 'Positive' in prediction_text %}positive{% else %}negative{% endif %}">
+                {{ prediction_text }}
+            </div>
+            {% endif %}
+
+            <h1>Fill Your Details</h1>
+            <form action="/predict" method="post" class="form-grid">
+                <!-- Basic Information -->
+                <div class="input-box">
+                    <label for="age">Age:</label>
+                    <div class="input-description">Patient's age in years</div>
+                    <input type="number" name="age" required>
+                </div>
+                <div class="input-box">
+                    <label for="sex">Sex:</label>
+                    <div class="input-description">Patient's biological sex</div>
+                    <select name="sex" required>
+                        <option value="0">Female</option>
+                        <option value="1">Male</option>
+                    </select>
+                </div>
+
+                <!-- Medical History -->
+                <div class="input-box">
+                    <label for="on_thyroxine">On Thyroxine:</label>
+                    <div class="input-description">Currently taking thyroid hormone medication</div>
+                    <select name="on_thyroxine" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="query_on_thyroxine">Query on Thyroxine:</label>
+                    <div class="input-description">Questioning thyroid hormone medication</div>
+                    <select name="query_on_thyroxine" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="on_antithyroid_medication">On Antithyroid Medication:</label>
+                    <div class="input-description">Currently taking medication to reduce thyroid hormone production</div>
+                    <select name="on_antithyroid_medication" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="thyroid_surgery">Thyroid Surgery:</label>
+                    <div class="input-description">History of thyroid surgery</div>
+                    <select name="thyroid_surgery" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="I131_treatment">I131 Treatment:</label>
+                    <div class="input-description">History of radioactive iodine treatment</div>
+                    <select name="I131_treatment" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <!-- Current Status -->
+                <div class="input-box">
+                    <label for="query_hypothyroid">Query Hypothyroid:</label>
+                    <div class="input-description">Suspected underactive thyroid condition</div>
+                    <select name="query_hypothyroid" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="query_hyperthyroid">Query Hyperthyroid:</label>
+                    <div class="input-description">Suspected overactive thyroid condition</div>
+                    <select name="query_hyperthyroid" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="pregnant">Pregnant:</label>
+                    <div class="input-description">Current pregnancy status</div>
+                    <select name="pregnant" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="sick">Sick:</label>
+                    <div class="input-description">Currently feeling unwell</div>
+                    <select name="sick" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <!-- Additional Conditions -->
+                <div class="input-box">
+                    <label for="lithium">Lithium:</label>
+                    <div class="input-description">Currently taking lithium medication</div>
+                    <select name="lithium" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="goitre">Goitre:</label>
+                    <div class="input-description">Enlarged thyroid gland condition</div>
+                    <select name="goitre" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="tumor">Tumor:</label>
+                    <div class="input-description">Presence of thyroid tumor</div>
+                    <select name="tumor" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="hypopituitary">Hypopituitary:</label>
+                    <div class="input-description">Reduced pituitary gland function</div>
+                    <select name="hypopituitary" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+                <div class="input-box">
+                    <label for="psych">Psychiatric Condition:</label>
+                    <div class="input-description">Presence of psychiatric condition</div>
+                    <select name="psych" required>
+                        <option value="1">Yes</option>
+                        <option value="0">No</option>
+                    </select>
+                </div>
+
+                <!-- Test Results -->
+                <div class="input-box">
+                    <label for="T3">T3:</label>
+                    <div class="input-description">Triiodothyronine hormone level</div>
+                    <div class="reference-range">Normal range: 0.6 - 2.8 nmol/L</div>
+                    <input type="number" name="T3" step="0.1" required>
+                </div>
+                <div class="input-box">
+                    <label for="TT4">TT4:</label>
+                    <div class="input-description">Total Thyroxine hormone level</div>
+                    <div class="reference-range">Normal range: 60 - 140 nmol/L</div>
+                    <input type="number" name="TT4" step="0.1" required>
+                </div>
+                <div class="input-box">
+                    <label for="T4U">T4U:</label>
+                    <div class="input-description">Thyroxine Uptake</div>
+                    <div class="reference-range">Normal range: 0.8 - 1.2</div>
+                    <input type="number" name="T4U" step="0.01" required>
+                </div>
+                <div class="input-box">
+                    <label for="FTI">FTI:</label>
+                    <div class="input-description">Free Thyroxine Index</div>
+                    <div class="reference-range">Normal range: 60 - 140</div>
+                    <input type="number" name="FTI" step="0.1" required>
+                </div>
+
+                <!-- Referral Information -->
+                <div class="input-box">
+                    <label for="referral_source">Referral Source:</label>
+                    <div class="input-description">Source of patient referral</div>
+                    <select name="referral_source" required>
+                        <option value="STMW">STMW</option>
+                        <option value="SVHC">SVHC</option>
+                        <option value="SVHD">SVHD</option>
+                        <option value="SVI">SVI</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="btn">Predict</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>Thyroid Disease Detection System</p>
+        <div class="social-links">
+            <a href="#"><i class='bx bxl-github'></i></a>
+            <a href="#"><i class='bx bxl-linkedin'></i></a>
+            <a href="#"><i class='bx bxl-twitter'></i></a>
+        </div>
+    </footer>
+</body>
+
+</html>
