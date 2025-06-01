@@ -28,8 +28,10 @@
 
 ---
 
-## 🚀 Demo
+## 🚀 Demo & Deployment
 [![Demo Video](https://img.shields.io/badge/Watch%20Demo-YouTube-red?logo=youtube&style=for-the-badge)](https://github.com/pavitra147/Thyroid-Disease-Detection/assets/130755029/1d78ea71-96e3-4e11-a746-2a8606b23c90)
+
+[![Deploy App](https://img.shields.io/badge/Live%20App-Visit-green?style=for-the-badge&logo=heroku)](https://your-deployment-link.com)
 
 ---
 
@@ -76,7 +78,7 @@
 ## 💻 Usage
 1. Clone the repo:
    ```powershell
-   git clone <repo-url>
+   git clone https://github.com/manas1148/Thyroid-Disease-Detection.git
    cd Thyroid_disease
    ```
 2. Install dependencies:
