@@ -1,36 +1,107 @@
-# Thyroid_Disease_Detection
-Thyroid disease is a very common problem in India, more than one crore people are suffering with the disease every year. Thyroid disorder can speed up or slow down the metabolism of the body.
+<!-- Project Banner -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Thyroid%20Disease%20Detection-ML-blueviolet?style=for-the-badge" alt="Project Banner"/>
+</p>
 
-The main objective of this project is to predict if a person is having compensated hypothyroid, primary hypothyroid, secondary hypothyroid or negative (no thyroid) with the help of Machine Learning. Classification algorithms such as Random Forest, XGBoost and KNN Model have been trained on the thyroid dataset, UCI Machine Learning repository. After hyperparameter tuning XGBoost model has performed well with better accuracy, precision and recall. Application has deployed on Heroku with the help of flask framework.
-# Demo
-https://github.com/pavitra147/Thyroid-Disease-Detection/assets/130755029/1d78ea71-96e3-4e11-a746-2a8606b23c90
+<p align="center">
+  <img src="https://img.shields.io/badge/Python-3.7%2B-blue?style=flat-square"/>
+  <img src="https://img.shields.io/badge/Platform-Windows%20%7C%20Linux%20%7C%20Mac-lightgrey?style=flat-square"/>
+  <img src="https://img.shields.io/badge/License-MIT-green?style=flat-square"/>
+</p>
 
-# Technical Aspects
-Python 3.7 and more
-Important Libraries: sklearn, pandas, numpy, matplotlib & seaborn
-Front-end: HTML, CSS
-Back-end: Flask framework
-IDE: Jupyter Notebook & VSCode
-# Workflow
-Thyroid Disease Data Set from UCI Machine Learning Repository.
+# 🦋 Thyroid Disease Detection
 
-Link:https://archive.ics.uci.edu/ml/datasets/thyroid+disease
-# Data Pre-processing
-Missing values handling by Simple imputation (KNN Imputer)
-Outliers detection and removal by boxplot and percentile methods
-Categorical features handling by ordinal encoding and label encoding
-Feature scaling done by Standard Scalar method
-Imbalanced dataset handled by SMOTE
-Drop unnecessary columns
-# Model Creation and Evaluation
-Various classification algorithms like Random Forest, XGBoost, KNN etc tested.
-Random Forest, XGBoost and KNN were all performed well. XGBoost was chosen for the final model training and testing.
-Hyper parameter tuning was performed using RandomizedSearchCV
-Model performance evaluated based on accuracy, confusion matrix, classification report.
-# Author
-Manas Rai Kaushik :https://www.linkedin.com/in/manas-rai-kaushik-1b4200242/
+> Predict thyroid conditions using Machine Learning and an interactive web app.
 
+---
 
+## 📑 Table of Contents
+- [Demo](#demo)
+- [Features](#features)
+- [Technical Aspects](#technical-aspects)
+- [Workflow](#workflow)
+- [Data Pre-processing](#data-pre-processing)
+- [Model Creation and Evaluation](#model-creation-and-evaluation)
+- [Usage](#usage)
+- [Author](#author)
+- [Contributing](#contributing)
 
-# Help Me Improve
-Hello Reader if you find any bug please consider raising issue I will address them asap.
+---
+
+## 🚀 Demo
+[![Demo Video](https://img.shields.io/badge/Watch%20Demo-YouTube-red?logo=youtube&style=for-the-badge)](https://github.com/pavitra147/Thyroid-Disease-Detection/assets/130755029/1d78ea71-96e3-4e11-a746-2a8606b23c90)
+
+---
+
+## ✨ Features
+- Predicts compensated, primary, secondary hypothyroid, or negative (no thyroid)
+- Trained on UCI Machine Learning Repository dataset
+- Uses XGBoost, Random Forest, and KNN models
+- Web app built with Flask, HTML, and CSS
+- Deployed on Heroku
+
+---
+
+## ⚙️ Technical Aspects
+- **Python:** 3.7+
+- **Libraries:** `sklearn`, `pandas`, `numpy`, `matplotlib`, `seaborn`
+- **Front-end:** HTML, CSS
+- **Back-end:** Flask
+- **IDE:** Jupyter Notebook, VSCode
+
+---
+
+## 🛠️ Workflow
+- Dataset: [UCI Thyroid Disease Data Set](https://archive.ics.uci.edu/ml/datasets/thyroid+disease)
+
+---
+
+## 🧹 Data Pre-processing
+- Missing values handled by KNN Imputer
+- Outliers removed by boxplot/percentile methods
+- Categorical features encoded (ordinal/label)
+- Feature scaling with Standard Scaler
+- Imbalanced data handled by SMOTE
+- Dropped unnecessary columns
+
+---
+
+## 🤖 Model Creation and Evaluation
+- Tested: Random Forest, XGBoost, KNN
+- Final Model: XGBoost (after hyperparameter tuning with RandomizedSearchCV)
+- Evaluated with accuracy, confusion matrix, classification report
+
+---
+
+## 💻 Usage
+1. Clone the repo:
+   ```powershell
+   git clone <repo-url>
+   cd Thyroid_disease
+   ```
+2. Install dependencies:
+   ```powershell
+   pip install -r requirements.txt
+   ```
+3. Run the app:
+   ```powershell
+   python app.py
+   ```
+4. Open your browser at `http://localhost:5000`
+
+---
+
+## 👤 Author
+- **Manas Rai Kaushik**  
+  [LinkedIn](https://www.linkedin.com/in/manas-rai-kaushik-1b4200242/)
+
+---
+
+## 🤝 Contributing
+If you find any bugs or have suggestions, please [raise an issue](#) or submit a pull request!
+
+---
+
+<p align="center">
+  <b>⭐️ If you like this project, give it a star!</b>
+</p>
